@@ -1,0 +1,9 @@
+dados.db
+fotos/
+BackupPetshop_*/
+
+.venv/
+build/
+dist/
+*.spec
+__pycache__/

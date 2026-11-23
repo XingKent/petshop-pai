@@ -1,0 +1,288 @@
+# Cadastro de Cachorros - Petshop
+
+Programa para Windows que guarda o cadastro de cada cachorro e o histórico dos
+**3 últimos serviços** (observação, data e foto). Funciona sem internet e sem
+precisar instalar nada no computador de quem usa.
+
+## Índice
+
+- [Parte 1 - Usar o programa](#parte-1---usar-o-programa)
+  - [1.1 Instalar pela primeira vez](#11-instalar-pela-primeira-vez)
+  - [1.2 Atualizar para a versão mais recente](#12-atualizar-para-a-versão-mais-recente)
+  - [1.3 Como usar no dia a dia](#13-como-usar-no-dia-a-dia)
+  - [1.4 Backup e restauração](#14-backup-e-restauração)
+  - [1.5 Problemas comuns](#15-problemas-comuns)
+- [Parte 2 - Manutenção e publicação de versões](#parte-2---manutenção-e-publicação-de-versões)
+  - [2.1 Arquivos do projeto](#21-arquivos-do-projeto)
+  - [2.2 Testar o programa sem gerar o .exe](#22-testar-o-programa-sem-gerar-o-exe)
+  - [2.3 Gerar o .exe no seu PC](#23-gerar-o-exe-no-seu-pc)
+  - [2.4 Subir o projeto no GitHub (uma vez só)](#24-subir-o-projeto-no-github-uma-vez-só)
+  - [2.5 Lançar uma versão nova](#25-lançar-uma-versão-nova)
+  - [2.6 Corrigir um bug: o fluxo completo](#26-corrigir-um-bug-o-fluxo-completo)
+  - [2.7 Se o build do GitHub falhar](#27-se-o-build-do-github-falhar)
+
+---
+
+# Parte 1 - Usar o programa
+
+## 1.1 Instalar pela primeira vez
+
+1. Abra a página de **Releases** do projeto no GitHub (guarde o link nos
+   favoritos do navegador).
+2. Na versão mais recente (a primeira da lista), clique em **PetshopCadastro.exe**
+   para baixar.
+3. Crie uma pasta fixa no computador, por exemplo `C:\PetshopCadastro\`, e mova o
+   `PetshopCadastro.exe` para dentro dela.
+   **Não deixe o programa na área de trabalho nem em Downloads**: o programa cria
+   o banco de dados e as fotos na mesma pasta onde ele está, e é importante que
+   essa pasta não mude de lugar.
+4. Dê dois cliques no `PetshopCadastro.exe`. Na primeira vez ele cria sozinho o
+   arquivo `dados.db` e a pasta `fotos`.
+5. Para ter um atalho: clique com o botão direito no `.exe`, *Enviar para*,
+   *Área de trabalho (criar atalho)*.
+
+**Avisos do Windows na primeira abertura:**
+
+- Se aparecer "O Windows protegeu o computador" (SmartScreen), clique em
+  **Mais informações** e depois em **Executar assim mesmo**. Isso acontece porque
+  o programa não tem assinatura digital paga. É normal e só aparece na primeira vez.
+- Se o antivírus bloquear o arquivo, adicione a pasta `C:\PetshopCadastro\` como
+  exceção. Programas feitos com PyInstaller às vezes são marcados por engano.
+
+## 1.2 Atualizar para a versão mais recente
+
+Quando houver uma versão nova (ou uma correção de problema):
+
+1. **Feche o programa.**
+2. Faça um **backup** antes (veja 1.4). É só por segurança.
+3. Abra a página de **Releases** e baixe o `PetshopCadastro.exe` da versão mais
+   recente (a primeira da lista).
+4. Copie o arquivo baixado para `C:\PetshopCadastro\` e escolha **Substituir o
+   arquivo**.
+5. Abra o programa normalmente.
+
+Os cadastros e as fotos **não são apagados** na atualização, porque ficam em
+arquivos separados do programa (`dados.db` e pasta `fotos`). Só o `.exe` é trocado.
+
+## 1.3 Como usar no dia a dia
+
+**Cadastrar um cachorro novo**
+
+1. Clique em **+ Novo cachorro**.
+2. Preencha nome do cachorro, nome da pessoa, endereço e telefone.
+3. Clique em **Salvar cadastro**.
+
+Se o dono tem mais de um cachorro, cada um tem o seu próprio cadastro.
+
+**Pesquisar um cachorro**
+
+Digite na caixa de busca, no topo da esquerda. A lista filtra enquanto você
+digita e procura por nome do cachorro, nome do dono ou telefone. Clique no nome
+na lista para abrir o cadastro.
+
+**Registrar um serviço novo (um corte, por exemplo)**
+
+1. Abra o cachorro na lista.
+2. Clique em **+ Novo serviço**. A data já vem com o dia de hoje.
+3. Escreva a observação.
+4. Clique em **Escolher foto...** e selecione a foto. O programa **copia** a foto
+   para dentro da pasta dele, então depois você pode apagar a original.
+5. Clique em **Salvar serviço**.
+
+Os dados do cadastro (nome, dono, endereço, telefone) não precisam ser digitados
+de novo.
+
+**Como funciona o histórico**
+
+O programa guarda o serviço atual e os 2 anteriores. Quando você salva um novo
+serviço, o mais antigo é apagado, junto com a foto dele. Na lista de serviços,
+clique em uma data para ver aquele serviço. Dá para editar a data, a observação
+e a foto de qualquer um dos três, e depois é só clicar em **Salvar serviço**.
+
+**Fotos vindas do WhatsApp**
+
+O jeito mais simples: mande a foto para você mesmo no WhatsApp Web, baixe, e ela
+cai na pasta Downloads. O botão **Escolher foto...** já abre na pasta Downloads.
+Clicando na miniatura da foto, ela abre ampliada.
+
+**Corrigir um dado**
+
+Todos os campos são editáveis. Mude o que precisar e clique em **Salvar cadastro**
+(para dados do cachorro/dono) ou **Salvar serviço** (para data, observação e foto).
+
+**Excluir um cachorro**
+
+Clique em **Excluir cachorro**. O programa pergunta antes de apagar, e apaga
+também o histórico e as fotos dele. Isso não tem como desfazer.
+
+## 1.4 Backup e restauração
+
+**Fazer backup** (recomendado toda semana)
+
+1. Conecte um pendrive (ou escolha uma pasta sincronizada com a nuvem).
+2. No programa, clique em **Fazer backup**.
+3. Escolha o pendrive ou a pasta.
+
+Será criada uma pasta chamada `BackupPetshop_AAAA-MM-DD_HHMM` com o banco de
+dados e todas as fotos.
+
+**Restaurar um backup** (computador novo, ou se algo der errado)
+
+1. **Feche o programa.**
+2. Abra a pasta do backup que você quer restaurar.
+3. Copie o arquivo `dados.db` e a pasta `fotos` para dentro da pasta do programa
+   (`C:\PetshopCadastro\`), substituindo o que estiver lá.
+4. Abra o programa.
+
+Para **mudar de computador**, o processo é o mesmo: instale o programa no
+computador novo (1.1) e restaure o último backup.
+
+## 1.5 Problemas comuns
+
+| Problema | O que fazer |
+|---|---|
+| O Windows bloqueia o programa | Mais informações > Executar assim mesmo (1.1) |
+| O antivírus apagou o `.exe` | Adicione a pasta `C:\PetshopCadastro\` como exceção e baixe de novo |
+| Sumiram os cadastros depois de mover o programa | Os dados ficam ao lado do `.exe`. Procure o `dados.db` na pasta antiga e copie, com a pasta `fotos`, para a pasta nova |
+| Mensagem "Data inválida" | Digite a data como dia/mês/ano com barras, por exemplo `16/11/2026` |
+| A foto não aparece | Confira se a pasta `fotos` ainda está ao lado do `.exe` e se o arquivo não foi apagado |
+| Dois computadores com cadastros diferentes | O programa não sincroniza entre computadores. Use um só, ou restaure backups manualmente |
+
+---
+
+# Parte 2 - Manutenção e publicação de versões
+
+## 2.1 Arquivos do projeto
+
+```
+PetshopCadastro/
+├── petshop.py                    código do programa (Python + Tkinter + SQLite)
+├── gerar_exe.bat                 gera o .exe no seu PC usando um ambiente virtual
+├── README.md                     este manual
+├── .gitignore                    impede que dados de clientes subam para o GitHub
+└── .github/workflows/build.yml   faz o GitHub gerar o .exe e publicar em Releases
+```
+
+Durante o uso aparecem também (e **nunca** devem ser enviados ao GitHub):
+`dados.db`, a pasta `fotos/`, pastas `BackupPetshop_*`, `.venv/`, `build/` e `dist/`.
+
+## 2.2 Testar o programa sem gerar o .exe
+
+Precisa do Python 3 instalado (python.org, marcando **Add Python to PATH**).
+
+```
+py -m venv .venv
+.venv\Scripts\python.exe -m pip install pillow
+.venv\Scripts\python.exe petshop.py
+```
+
+O `dados.db` e a pasta `fotos` de teste são criados ao lado do `petshop.py`.
+Apague os dois antes de copiar o programa para outro computador, se quiser que
+ele comece com o banco vazio.
+
+## 2.3 Gerar o .exe no seu PC
+
+Dê dois cliques no `gerar_exe.bat`. Ele:
+
+1. procura o Python (primeiro `py`, depois `python`);
+2. cria a pasta `.venv` (ambiente virtual), ou reaproveita se já existir;
+3. instala `pillow` e `pyinstaller` dentro do `.venv`;
+4. gera `dist\PetshopCadastro.exe`.
+
+Esse caminho é útil para testar rápido. Para distribuir a quem vai usar o
+programa, o caminho recomendado é o da Release automática (2.5), porque basta baixar o arquivo.
+
+## 2.4 Subir o projeto no GitHub (uma vez só)
+
+1. Crie uma conta em github.com, se ainda não tiver, e instale o **Git para
+   Windows** (git-scm.com).
+2. No GitHub, clique em **New repository**, dê o nome `petshop-cadastro` e crie
+   o repositório **vazio** (sem README, sem .gitignore).
+   - **Público** é o mais simples: quem for baixar não precisa de conta. O
+     repositório só tem código, nenhum dado de cliente.
+   - **Privado** exige que quem for baixar tenha conta e receba acesso ao repositório.
+3. Na pasta do projeto, abra o terminal (Prompt de Comando ou PowerShell) e rode:
+
+```
+git init
+git add .
+git status
+```
+
+4. **Confira o resultado do `git status`**: `dados.db`, `fotos/`, `.venv/`,
+   `build/`, `dist/` e `BackupPetshop_*` **não** podem aparecer na lista. Se
+   aparecerem, pare e confira o `.gitignore`.
+5. Continue:
+
+```
+git commit -m "Primeira versão"
+git branch -M main
+git remote add origin https://github.com/SEU_USUARIO/petshop-cadastro.git
+git push -u origin main
+```
+
+O GitHub pode pedir login na primeira vez.
+
+6. No GitHub, confira se a pasta `.github/workflows/` e o arquivo `build.yml`
+   subiram (a pasta é oculta no Windows; ative *Exibir > Itens ocultos*).
+
+## 2.5 Lançar uma versão nova
+
+O `.exe` é gerado pelo próprio GitHub sempre que você envia uma **tag** começando
+com `v`:
+
+```
+git tag v1.0
+git push origin v1.0
+```
+
+Depois:
+
+1. No repositório, abra a aba **Actions** e acompanhe o job "Gerar executavel".
+   Leva de 2 a 3 minutos.
+2. Quando ficar verde, abra a aba **Releases** (ou o link
+   `https://github.com/SEU_USUARIO/petshop-cadastro/releases`). A versão `v1.0`
+   estará lá com o `PetshopCadastro.exe` para baixar.
+3. Compartilhe o link da página de Releases com quem usa o programa. Ele pode
+   ser guardado nos favoritos e usado sempre.
+
+**Numeração das versões:** use `v1.0`, `v1.1`, `v1.2`... para correções e melhorias
+pequenas, e `v2.0` se mudar algo grande. Não reutilize uma tag que já foi enviada:
+sempre crie uma nova.
+
+## 2.6 Corrigir um bug: o fluxo completo
+
+1. Edite o `petshop.py` e teste com `.venv\Scripts\python.exe petshop.py` (2.2).
+2. Envie para o GitHub e crie a nova versão:
+
+```
+git add .
+git commit -m "Corrige: descrição curta do que mudou"
+git push origin main
+git tag v1.1
+git push origin v1.1
+```
+
+3. Espere o build ficar verde na aba **Actions** e confira a nova versão em **Releases**.
+4. Avise quem usa o programa. O procedimento é o passo 1.2 deste manual: baixar
+   o `.exe` novo, substituir o antigo e abrir. Os dados continuam intactos.
+
+**Cuidado ao mexer no banco de dados:** se uma mudança alterar a estrutura das
+tabelas (novos campos, por exemplo), precisa tratar o `dados.db` que já existe
+nos computadores em uso. Não basta mudar o `CREATE TABLE`, porque ele só vale para bancos novos.
+Nesse caso, use `ALTER TABLE` ao iniciar o programa e teste com uma cópia de um
+`dados.db` com dados antes de lançar.
+
+## 2.7 Se o build do GitHub falhar
+
+1. Abra a aba **Actions**, clique na execução com o X vermelho e depois no passo
+   que falhou para ver a mensagem.
+2. Erros mais comuns:
+   - **Erro ao criar a Release / permissão negada:** vá em *Settings > Actions >
+     General > Workflow permissions* e escolha **Read and write permissions**.
+   - **Erro de sintaxe no Python:** o log aponta a linha. Corrija, e crie uma tag
+     nova (por exemplo `v1.0.1`).
+   - **Tag já existe:** se precisar refazer, apague a tag
+     (`git tag -d v1.0` e `git push origin :refs/tags/v1.0`) ou use um número novo.
+3. Como alternativa, você sempre pode gerar o `.exe` no seu PC com o
+   `gerar_exe.bat` (2.3) e anexar manualmente em *Releases > Draft a new release*.
